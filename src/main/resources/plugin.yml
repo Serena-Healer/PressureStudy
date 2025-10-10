@@ -1,0 +1,56 @@
+name: PressureStudy
+version: '${project.version}'
+main: scellena.pressurestudy.Main
+api-version: 1.16
+commands:
+  start:
+    description: タイマー開始
+    usage: /start N
+  layout:
+    description: レイアウト変更
+    usage: /layout S
+  cd:
+    description: 基本ファイルパス変更
+    usage: /cd S
+  extend:
+    description: 制限時間延長(秒)
+    usage: /extend N
+  loadplayers:
+    description: プレイヤー一覧読み込み
+    usage: /loadplayers S
+  loadquiz:
+    description: クイズ読み込み
+    usage: /loadquiz S
+  ac:
+    description: 正解判定
+    usage: /ac N
+  wa:
+    description: 誤答判定
+    usage: /wa N
+  select:
+    description: 問題を選択
+    usage: /select N
+  thumbnail:
+    description: サムネイル表示
+    usage: /thumbnail
+  suspend:
+    description: クイズを中止
+    usage: /suspend
+  demo:
+    description: 問題一覧デモ表示
+    usage: /demo
+  garbage:
+    description: キャッシュクリア
+    usage: /garbage
+  judge:
+    description: 正誤判定(ドボン問題用)
+    usage: /judge N
+  pass:
+    description: パス(プレッシャーリレー用)
+  pause:
+    description: タイマー一時停止/再開
+  rs_movie:
+    description: 動画問題 最初から
+  asset:
+    description: アセットパス変更
+    usage: /cd S
