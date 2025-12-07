@@ -47,6 +47,8 @@ commands:
     usage: /judge N
   pass:
     description: パス(プレッシャーリレー用)
+  qpass:
+    description: パス(説明力用)
   pause:
     description: タイマー一時停止/再開
   rs_movie:
@@ -54,3 +56,5 @@ commands:
   asset:
     description: アセットパス変更
     usage: /cd S
+  save:
+    description: 解答集出力

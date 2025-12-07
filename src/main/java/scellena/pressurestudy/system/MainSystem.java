@@ -71,12 +71,10 @@ public class MainSystem {
     public static void reset(){
         gameData.currentId = 0;
         gameData.selectedNumber = -1;
-        for(int i=0; i<12; i++){
+        for(int i=0; i<256; i++){
+            gameData.sizeElapsed[i] = 0;
             gameData.answered[i] = false;
             gameData.failed[i] = false;
-        }
-        for(int i=0; i<10; i++){
-            gameData.sizeElapsed[i] = 0;
         }
         MainSystem.gameData.demoTick = -1;
     }

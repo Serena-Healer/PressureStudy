@@ -30,7 +30,7 @@ public class TimerHelper {
                 if (gameData.timeLeft == 0) {
                     if(gameData.repeat > 0){
                         gameData.repeat--;
-                        gameData.timeLeft = gameData.quiz.getTimer();
+                        gameData.timeLeft = gameData.quiz.getTimer() * 20;
                         MainSystem.gameData.currentId++;
                     }else {
                         MainSystem.gameData.bgmClip.stop();

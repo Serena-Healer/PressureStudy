@@ -35,9 +35,9 @@ public class GameDataHandler {
 
     public List<AnswererInformation> answerBox = new ArrayList<>();
     public String teamName = "";
-    public boolean[] answered = new boolean[12];
-    public boolean[] failed = new boolean[12];
-    public int[] sizeElapsed = new int[10];
+    public boolean[] answered = new boolean[256];
+    public boolean[] failed = new boolean[256];
+    public int[] sizeElapsed = new int[256];
     public QuizInformationBase quiz;
     public int selectedNumber = -1;
     public int waCount = 0;

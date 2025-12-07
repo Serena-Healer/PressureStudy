@@ -1,6 +1,7 @@
 package scellena.pressurestudy.data;
 
 import scellena.pressurestudy.system.MainSystem;
+import scellena.pressurestudy.system.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ public class QuizInformationBase {
     int repeat;
     List<SingleQuizInformation> quizList;
     int waCountAllowed = 0;
+    int acCountRequired = 10;
     String layout;
     String layoutThumbnail;
     int startId = 0;
+    boolean noAutoPass = false;
 
     String category;
     String bgmNormalName = "プレッシャーSTUDY フル(1代目).wav";
@@ -58,6 +61,10 @@ public class QuizInformationBase {
         return category;
     }
 
+    public int getAcCountRequired() {
+        return acCountRequired;
+    }
+
     public int getWaCountAllowed() {
         return waCountAllowed;
     }
@@ -86,6 +93,10 @@ public class QuizInformationBase {
         return startId;
     }
 
+    public boolean isNoAutoPass() {
+        return noAutoPass;
+    }
+
     public void load(List<String> list){
         quizList = new ArrayList<>();
         mines = new ArrayList<>();
@@ -100,6 +111,8 @@ public class QuizInformationBase {
                 category = str.substring(9);
             }else if(str.startsWith("wa=")){
                 waCountAllowed = Integer.parseInt(str.substring(3));
+            }else if(str.startsWith("ac=")){
+                acCountRequired = Integer.parseInt(str.substring(3));
             }else if(str.startsWith("layout=")){
                 layout = str.substring(7);
             }else if(str.startsWith("layout_thumbnail=")){
@@ -116,6 +129,8 @@ public class QuizInformationBase {
                 difficultyFlag = true;
             }else if(str.startsWith("startid=")){
                 startId = Integer.parseInt(str.substring(8));
+            }else if(str.startsWith("noautopass=true")){
+                noAutoPass = true;
             }else if(str.startsWith("mine=")){
                 String mine = str.substring(5);
                 String[] s = mine.split(",");
@@ -126,6 +141,30 @@ public class QuizInformationBase {
                 quizList.add(new SingleQuizInformation(this, str));
             }
         }
+    }
+
+    public List<String> getAdminString(){
+        List<String> ans = new ArrayList<>();
+        ans.add(getCategory().replace("\n", " "));
+        if(mines.size() > 0){
+            ans.add("ドボン一覧");
+            for(int i : mines){
+                SingleQuizInformation q = getQuizList().get(i);
+                StringBuilder builder = new StringBuilder();
+                builder.append(Utilities.getNumberString(i));
+                builder.append(q.getTitle());
+                ans.add(builder.toString());
+            }
+        }else{
+            for(int i=0; i<getQuizList().size(); i++){
+                SingleQuizInformation q = getQuizList().get(i);
+                StringBuilder builder = new StringBuilder();
+                builder.append(Utilities.getNumberString(i));
+                builder.append(q.getTitle()).append(" -> ").append(q.getAnswer());
+                ans.add(builder.toString());
+            }
+        }
+        return ans;
     }
 
     public List<Integer> getMines() {

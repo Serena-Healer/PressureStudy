@@ -26,7 +26,7 @@ import static scellena.pressurestudy.system.MainSystem.gameData;
 public final class Main extends JavaPlugin {
 
     public static Plugin plugin;
-    public static String version = "1.1.0";
+    public static String version = "1.2.0";
 
     @Override
     public void onEnable() {
@@ -145,6 +145,10 @@ public final class Main extends JavaPlugin {
             MainSystem.gameData.currentLayout = new LayoutTitle();
             return true;
         }
+        if(command.getName().equals("save")){
+            TextFileLoader.save("answer.txt", gameData.quiz.getAdminString());
+             return true;
+        }
         if(command.getName().equals("ac")){
             if(args.length > 0) {
                 QuizSystem.select(Integer.parseInt(args[0]) - 1);
@@ -205,6 +209,10 @@ public final class Main extends JavaPlugin {
         }
         if(command.getName().equals("pass")){
             MainSystem.gameData.currentId++;
+            return true;
+        }
+        if(command.getName().equals("qpass")){
+            QuizSystem.select(gameData.selectedNumber + 1);
             return true;
         }
         if(command.getName().equals("rs_movie")){

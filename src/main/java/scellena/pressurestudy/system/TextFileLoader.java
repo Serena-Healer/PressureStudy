@@ -17,4 +17,16 @@ public class TextFileLoader {
         return new ArrayList<>();
     }
 
+    public static void save(String path, List<String> text){
+        try {
+            if(!Files.exists(Paths.get(MainSystem.gameData.cd + path))) Files.createFile(Paths.get(MainSystem.gameData.cd + path));
+            List<String> baseTxt = Files.readAllLines(Paths.get(MainSystem.gameData.cd + path));
+            baseTxt.add("");
+            baseTxt.addAll(text);
+            Files.write(Paths.get(MainSystem.gameData.cd + path), baseTxt);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
