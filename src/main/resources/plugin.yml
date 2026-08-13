@@ -55,6 +55,10 @@ commands:
     description: 動画問題 最初から
   asset:
     description: アセットパス変更
-    usage: /cd S
+    usage: /asset S
   save:
     description: 解答集出力
+  sizepause:
+    description: プレッシャーサイズ動画一時停止/再開
+  export:
+    description: 統計データ標準出力

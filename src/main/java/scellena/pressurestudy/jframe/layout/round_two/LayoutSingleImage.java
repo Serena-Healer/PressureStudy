@@ -26,11 +26,19 @@ public class LayoutSingleImage extends LayoutBase {
 
         if(MainSystem.gameData.timeMax > MainSystem.gameData.timeLeft) {
             g.setColor(Color.BLACK);
+            RenderUtils.renderTextMiddleWidth(g, q.getTitle(), 480, 280, 720, 64);
+            if(q.getHint() != null && !MainSystem.gameData.answered[0]){
+                RenderUtils.renderTextMiddleWidth(g, q.getHint(), 480, 444, 720, 48);
+            }
             if (path == null || path.length() == 0) {
-                RenderUtils.renderTextMiddleWidth(g, q.getTitle(), 480, 280, 720, 64);
             } else {
                 RenderUtils.renderImageMiddle(g, path, 480, 280, -1, 400);
             }
+        }
+
+        if(MainSystem.gameData.answered[0]) {
+            g.setColor(Color.RED);
+            RenderUtils.renderTextMiddleWidth(g, q.getAnswer(), 480, 444, 720, 48);
         }
 
         g.setColor(Color.BLACK);

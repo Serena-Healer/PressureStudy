@@ -2,8 +2,8 @@ package scellena.pressurestudy.system;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.EntityDamageEvent;
 import scellena.pressurestudy.Main;
+import scellena.pressurestudy.data.AnswererInformation;
 import scellena.pressurestudy.data.GameDataHandler;
 import scellena.pressurestudy.data.PlayerDataHandler;
 import scellena.pressurestudy.enums.EnumScene;
@@ -12,7 +12,6 @@ import scellena.pressurestudy.jframe.FrameHandler;
 import scellena.pressurestudy.jframe.clips.ClipPlayerHandler;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MainSystem {
@@ -20,6 +19,7 @@ public class MainSystem {
     public static Map<String, PlayerDataHandler> playerData = new HashMap<>();
     public static Set<String> gamePlayers = new HashSet<>();
     public static GameDataHandler gameData = new GameDataHandler();
+    public static Map<String, AnswererInformation> answerer = new HashMap<>();
 
     public static void onTick(){
         try{
@@ -51,7 +51,7 @@ public class MainSystem {
                 }
             }
 
-            if(gameData.selectedNumber >= 0 && gameData.selectedNumber <= 9){
+            if(gameData.selectedNumber >= 0 && gameData.selectedNumber <= 9 && !gameData.sizePaused){
                 gameData.sizeElapsed[gameData.selectedNumber]++;
             }
 
@@ -134,6 +134,23 @@ public class MainSystem {
             ret.put(p, getPlayerData(p));
         });
         return ret;
+    }
+
+    public static AnswererInformation getAnswerer(String player){
+        answerer.putIfAbsent(player, new AnswererInformation());
+        return answerer.get(player);
+    }
+
+    public static void exportStats(){
+        for(Map.Entry<String, AnswererInformation> entry : answerer.entrySet()){
+            StringBuilder ans = new StringBuilder();
+            ans.append(entry.getKey());
+            ans.append(" ");
+            ans.append("正解:").append(entry.getValue().ac).append(" ");
+            ans.append("Fine Play:").append(entry.getValue().finePlay).append(" ");
+            ans.append("超Fine Play:").append(entry.getValue().superFinePlay).append(" ");
+            System.out.println(ans.toString());
+        }
     }
 
 }

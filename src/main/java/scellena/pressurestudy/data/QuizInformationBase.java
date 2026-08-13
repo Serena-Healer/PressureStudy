@@ -101,6 +101,7 @@ public class QuizInformationBase {
         quizList = new ArrayList<>();
         mines = new ArrayList<>();
         for(String str : list){
+            if(str.startsWith("#")) continue;
             if(str.startsWith("title=")){
                 title = str.substring(6);
             }else if(str.startsWith("timer=")){
@@ -190,6 +191,7 @@ public class QuizInformationBase {
         QuizInformationBase parent;
         String title;
         String imagePath;
+        String musicPath;
         String hint;
         String answer;
         List<String> choice = new ArrayList<>();
@@ -201,6 +203,11 @@ public class QuizInformationBase {
         public String getImagePath() {
             if(imagePath == null || imagePath.length() <= 1)return "";
             return parent.getFilePath() + "\\" + imagePath;
+        }
+
+        public String getMusicPath() {
+            if(musicPath == null || musicPath.length() <= 1)return "";
+            return parent.getFilePath() + "\\" + musicPath;
         }
 
         public String getHint() {
@@ -217,14 +224,32 @@ public class QuizInformationBase {
 
         public SingleQuizInformation(QuizInformationBase parent, String s){
             String[] args = s.split(",");
-            title = args[0];
             choice = new ArrayList<>();
-            if(args.length > 1) answer = args[1];
-            if(args.length > 2) hint = args[2];
-            if(args.length > 3) imagePath = args[3];
-            if(args.length > 4){
-                for(int i=4; i<args.length; i++){
-                    choice.add(args[i]);
+
+            for(int i=0; i<args.length; i++){
+                String text = args[i];
+                if(text.startsWith("q=")){
+                    title = text.substring(2);
+                }else if(text.startsWith("a=")){
+                    answer = text.substring(2);
+                }else if(text.startsWith("h=")){
+                    hint = text.substring(2);
+                }else if(text.startsWith("i=")){
+                    imagePath = text.substring(2);
+                }else if(text.startsWith("m=")){
+                    musicPath = text.substring(2);
+                }else if(text.startsWith("c=")){
+                    choice.add(text.substring(2));
+                }else if(i == 0){
+                    title = text;
+                }else if(i == 1){
+                    answer = text;
+                }else if(i == 2){
+                    hint = text;
+                }else if(i == 3){
+                    imagePath = text;
+                }else{
+                    choice.add(text);
                 }
             }
             this.parent = parent;

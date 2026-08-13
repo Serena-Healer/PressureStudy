@@ -17,11 +17,13 @@ public class LayoutManager {
         register("image_thumbnail", LayoutImageThumbnail.class);
         register("truefalse", LayoutTrueFalse.class);
         register("2choice", Layout2Choices.class);
+        register("2choice_image", Layout2ChoicesImage.class);
         register("sort", LayoutSort.class);
         register("japanese", LayoutJapanese.class);
         register("minesweeper", LayoutMineSweeper.class);
         register("minesweeper_thumbnail", LayoutMineSweeperThumbnail.class);
         register("image", LayoutImage.class);
+        register("image_full", LayoutImageFull.class);
         register("movie", LayoutMovie.class);
         register("speedmovie", LayoutSpeedMovie.class);
         register("title_thumbnail", LayoutTitleThumbnail.class);

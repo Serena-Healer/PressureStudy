@@ -54,7 +54,11 @@ public class ClipPlayerHandler {
 
     public static void playBGM(String fileName, boolean loop){
         try {
-            fileName = MainSystem.gameData.assetPath + "BGM素材\\" + fileName;
+            if(!new File(MainSystem.gameData.cd + fileName).exists()){
+                fileName = MainSystem.gameData.assetPath + "BGM素材\\" + fileName;
+            }else{
+                fileName = MainSystem.gameData.cd + fileName;
+            }
             stopBGM();
             MainSystem.gameData.bgmClip = createClip(new File(fileName));
             if(loop)MainSystem.gameData.bgmClip.loop(Clip.LOOP_CONTINUOUSLY);

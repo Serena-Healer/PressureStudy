@@ -17,6 +17,7 @@ import scellena.pressurestudy.jframe.layout.LayoutPlayers;
 import scellena.pressurestudy.jframe.layout.study.LayoutTitle;
 import scellena.pressurestudy.system.*;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import static scellena.pressurestudy.system.MainSystem.gameData;
 public final class Main extends JavaPlugin {
 
     public static Plugin plugin;
-    public static String version = "1.2.0";
+    public static String version = "1.2.1";
 
     @Override
     public void onEnable() {
@@ -45,6 +46,7 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         System.out.println("Plugin " + plugin.getName() + " stopped successfully!");
+        MainSystem.exportStats();
         ClipPlayerHandler.stopBGM();
         FrameHandler.jFrame.setVisible(false);
     }
@@ -118,11 +120,21 @@ public final class Main extends JavaPlugin {
         if(command.getName().equals("loadplayers")){
             List<String> list = TextFileLoader.load(args[0]);
             MainSystem.gameData.answerBox = new ArrayList<>();
+            java.awt.Color defaultColor = java.awt.Color.BLUE;
             for(String str : list){
                 if(str.startsWith("name=")){
                     MainSystem.gameData.teamName = str.substring(5);
-                }else {
-                    AnswererInformation info = new AnswererInformation();
+                }else if(str.startsWith("color=")) {
+                    if(str.contains("blue")){
+                        defaultColor = new Color(0, 64, 224);
+                    }else if(str.contains("yellow")){
+                        defaultColor = new Color(224, 128, 0);
+                    }else{
+                        defaultColor = new Color(224, 0, 0);
+                    }
+                }else{
+                    AnswererInformation info = MainSystem.getAnswerer(str.split(",")[0]);
+                    info.setColor(defaultColor);
                     info.loadInformation(str);
                     MainSystem.gameData.answerBox.add(info);
                 }
@@ -217,6 +229,18 @@ public final class Main extends JavaPlugin {
         }
         if(command.getName().equals("rs_movie")){
             MainSystem.gameData.sizeElapsed[MainSystem.gameData.selectedNumber] = 2;
+            return true;
+        }
+        if(command.getName().equals("sizepause")){
+            gameData.sizePaused = !gameData.sizePaused;
+            return true;
+        }
+        if(command.getName().equals("pause")){
+            gameData.paused = !gameData.paused;
+            return true;
+        }
+        if(command.getName().equals("export")){
+            MainSystem.exportStats();
             return true;
         }
         return super.onCommand(sender, command, label, args);

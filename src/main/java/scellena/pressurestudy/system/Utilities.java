@@ -505,8 +505,8 @@ public class Utilities {
     }
 
     public static String getNumberString(int id){
-        if(id >= 10)return "";
-        return "①②③④⑤⑥⑦⑧⑨⑩".substring(id, id + 1);
+        if(id >= 50)return "";
+        return "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿".substring(id, id + 1);
     }
 
     public static String getPathFromArgs(Object[] args){

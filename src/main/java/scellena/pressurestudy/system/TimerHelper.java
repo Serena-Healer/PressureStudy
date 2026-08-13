@@ -23,7 +23,7 @@ public class TimerHelper {
                     gameData.timeLeft = gameData.timeMax + 60;
                 }
             } else {
-                if (gameData.timeLeft >= 1) gameData.timeLeft--;
+                if (gameData.timeLeft >= 1 && !gameData.paused) gameData.timeLeft--;
                 if (gameData.timeLeft == 20 * 30 && gameData.timeMax > 20 * 30) {
                     ClipPlayerHandler.playBGM(MainSystem.gameData.quiz.getBgmLastName());
                 }
@@ -36,7 +36,7 @@ public class TimerHelper {
                         MainSystem.gameData.bgmClip.stop();
                         ClipPlayerHandler.stopBGM();
                         ClipPlayerHandler.play(MainSystem.gameData.quiz.getBgmTimeUpName());
-                        QuizSystem.lose();
+                        QuizSystem.lose(false);
                     }
                 }
             }

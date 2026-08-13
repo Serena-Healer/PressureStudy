@@ -5,6 +5,7 @@ import scellena.pressurestudy.system.MainSystem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,8 +179,9 @@ public class RenderUtils {
             g2d.fillRect(x + 35, y + 4, 187, 40);
         }
 
-        g2d.setColor(new Color(128, 128, 128));
-        g2d.fillOval(x, y, 48, 48);
+        //g2d.setColor(new Color(128, 128, 128));
+        //g2d.fillOval(x, y, 48, 48);
+        renderImageMiddle(g2d, MainSystem.gameData.assetPath + "timerOval.png", x + 24, y + 24, 48, 48, true);
 
         //文字列
         if(MainSystem.gameData.charge){
@@ -236,16 +238,31 @@ public class RenderUtils {
     }
 
     static Map<String, Image> imageMap = new HashMap<>();
+    static ArrayList<String> keepImage = new ArrayList<>();
 
     public static void clearCache(){
         imageMap = new HashMap<>();
+    }
+
+    public static void clearCacheLight(){
+        ArrayList<String> remove = new ArrayList<>();
+        for(String key : imageMap.keySet()){
+            if(!keepImage.contains(key)) remove.add(key);
+        }
+        for(String key : remove){
+            imageMap.remove(key);
+        }
     }
 
     public static void renderBackground(Graphics2D g){
         renderImageMiddle(g, MainSystem.gameData.assetPath + "background.jpg", 480, 270, -1, -1);
     }
 
-    public static void renderImageMiddle(Graphics2D g, String path, int x, int y, int w, int h){
+    public static void renderImageMiddle(Graphics2D g, String path, int x, int y, int w, int h) {
+        renderImageMiddle(g, path, x, y, w, h, false);
+    }
+
+    public static void renderImageMiddle(Graphics2D g, String path, int x, int y, int w, int h, boolean keep){
         if(!(path.startsWith("http")) && !(path.startsWith("C:"))){
             path = MainSystem.gameData.cd + path;
         }
@@ -256,18 +273,21 @@ public class RenderUtils {
         if(image.getWidth(null) != -1){
             //System.out.println(w + " " + h + " " + image.getWidth(null) + " " + image.getHeight(null) + " " + ((double)w / image.getWidth(null) * image.getHeight(null)));
             if((double)w * image.getHeight(null) / image.getWidth(null) < h){
-                renderImageMiddle(g, path, image, x, y, w, -1);
+                renderImageMiddle(g, path, image, x, y, w, -1, keep);
             }else{
-                renderImageMiddle(g, path, image, x, y, -1, h);
+                renderImageMiddle(g, path, image, x, y, -1, h, keep);
             }
         }else{
-            renderImageMiddle(g, path, image, -w, -h, w, h);
+            renderImageMiddle(g, path, image, -w, -h, w, h, keep);
         }
     }
 
-    public static void renderImageMiddle(Graphics2D g, String path, Image image, int x, int y, int w, int h){
+    public static void renderImageMiddle(Graphics2D g, String path, Image image, int x, int y, int w, int h, boolean keep){
         if(!imageMap.containsKey(path)){
             imageMap.put(path, image);
+            if(keep){
+                keepImage.add(path);
+            }
         }
         image = imageMap.get(path);
         if(image != null) {
@@ -276,6 +296,9 @@ public class RenderUtils {
 
             if (!imageMap.containsKey(path)) {
                 imageMap.put(path, image);
+                if(keep){
+                    keepImage.add(path);
+                }
             }
             image = imageMap.get(path);
             g.drawImage(image, x - image.getWidth(null) / 2, y - image.getHeight(null) / 2, null);

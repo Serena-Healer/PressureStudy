@@ -38,6 +38,8 @@ public class GameDataHandler {
     public boolean[] answered = new boolean[256];
     public boolean[] failed = new boolean[256];
     public int[] sizeElapsed = new int[256];
+    public boolean paused = false;
+    public boolean sizePaused = false;
     public QuizInformationBase quiz;
     public int selectedNumber = -1;
     public int waCount = 0;

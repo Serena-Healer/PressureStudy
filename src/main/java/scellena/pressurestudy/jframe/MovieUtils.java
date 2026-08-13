@@ -15,6 +15,8 @@ public class MovieUtils {
     static FFmpegFrameGrabber grabber2;
     static String moviePath;
 
+    static int cacheClearCnt = 200;
+
     public static void load(String path, boolean ignoreIfAlreadyLoaded){
         try {
             if(!(path.startsWith("http")) && !(path.startsWith("C:"))){
@@ -63,10 +65,13 @@ public class MovieUtils {
             Java2DFrameConverter converter = new Java2DFrameConverter();
             Frame frame = grabber.grabImage(); // It is important to use grabImage() to get a frame that can be turned into a BufferedImage
             BufferedImage bi = converter.convert(frame);
-            RenderUtils.renderImageMiddle(g, moviePath + "_" + grabber.getFrameNumber(), bi, x, y, w, h);
+            RenderUtils.renderImageMiddle(g, moviePath + "_" + grabber.getFrameNumber(), bi, x, y, w, h, false);
 
             //定期的にキャッシュクリアする
-            RenderUtils.clearCache();
+            if(cacheClearCnt-- <= 0) {
+                RenderUtils.clearCacheLight();
+                cacheClearCnt = 50;
+            }
         }catch(Exception e){
             Utilities.error(e);
         }
