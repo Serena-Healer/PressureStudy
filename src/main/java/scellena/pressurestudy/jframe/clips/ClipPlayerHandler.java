@@ -40,8 +40,13 @@ public class ClipPlayerHandler {
 
     public static void play(String fileName){
         try {
-            fileName = MainSystem.gameData.assetPath + "BGM素材\\" + fileName;
-            Clip c = createClip(new File(fileName));
+            File file;
+            file = new File(fileName);
+            if(!file.exists()){
+                fileName = MainSystem.gameData.assetPath + "BGM素材\\" + fileName;
+                file = new File(fileName);
+            }
+            Clip c = createClip(file);
             c.start();
         }catch(Exception e){
             e.printStackTrace();
@@ -54,7 +59,8 @@ public class ClipPlayerHandler {
 
     public static void playBGM(String fileName, boolean loop){
         try {
-            if(!new File(MainSystem.gameData.cd + fileName).exists()){
+            if(new File(fileName).exists()){
+            }else if(!new File(MainSystem.gameData.cd + fileName).exists()){
                 fileName = MainSystem.gameData.assetPath + "BGM素材\\" + fileName;
             }else{
                 fileName = MainSystem.gameData.cd + fileName;

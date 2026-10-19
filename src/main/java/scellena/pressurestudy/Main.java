@@ -75,6 +75,14 @@ public final class Main extends JavaPlugin {
                 }
             }
 
+            if(MainSystem.gameData.quiz.getWaCountOption() == -1){
+                RenderUtils.showTelop("リーダー以外は1回まで間違えてもOK");
+            }else if(MainSystem.gameData.quiz.getWaCountOption() == 1){
+                RenderUtils.showTelop("一度でも間違えたら即終了");
+            }else if(MainSystem.gameData.quiz.getWaCountOption() > 0){
+                RenderUtils.showTelop("1人が" + MainSystem.gameData.quiz.getWaCountOption() + "回間違えたら即終了");
+            }
+
             if(args.length >= 2){
                 MainSystem.gameData.relayHint = args[1];
                 MainSystem.gameData.currentId = 9;

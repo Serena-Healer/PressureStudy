@@ -26,7 +26,7 @@ public class LayoutJapaneseThumbnail2 extends LayoutBase {
                 if(MainSystem.gameData.quiz != null){
                     if(list.size() > n){
                         QuizInformationBase.SingleQuizInformation q = list.get(n);
-                        String s = q.getTitle();
+                        String s = q.getTitle().replaceAll("\\\\n", " ");
                         if(q.getHint() != null) {
                             s = s + q.getHint();
                         }

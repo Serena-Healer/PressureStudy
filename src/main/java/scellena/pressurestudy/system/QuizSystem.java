@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import scellena.pressurestudy.data.AnswererInformation;
 import scellena.pressurestudy.data.QuizInformationBase;
 import scellena.pressurestudy.enums.EnumScene;
+import scellena.pressurestudy.jframe.RenderUtils;
 import scellena.pressurestudy.jframe.clips.ClipPlayerHandler;
 import scellena.pressurestudy.jframe.layout.study.LayoutMineSweeper;
 
@@ -37,6 +38,10 @@ public class QuizSystem {
                 win();
             }
              */
+            if(MainSystem.gameData.quiz.getWaCountOption() == -1 && MainSystem.gameData.currentId == 9){
+                RenderUtils.showTelop("リーダーは間違えたら即終了");
+            }
+
             int ac = 0;
             for(int i=0; i<MainSystem.gameData.quiz.getQuizList().size(); i++){
                 ac += (MainSystem.gameData.answered[i] ? 1 : 0);
@@ -73,6 +78,8 @@ public class QuizSystem {
         if(MainSystem.gameData.quiz.getWaCountAllowed() > 0 && MainSystem.gameData.quiz.getWaCountAllowed() <= MainSystem.gameData.waCount){
             MainSystem.gameData.failed[number] = true;
             lose(true);
+        }else if(MainSystem.gameData.quiz.getWaCountAllowed() == MainSystem.gameData.waCount + 1){
+            RenderUtils.showTelop("次 間違えたら即終了（問題は変更できない）");
         }
     }
 

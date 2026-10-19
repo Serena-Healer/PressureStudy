@@ -32,6 +32,8 @@ public class GameDataHandler {
     public int lastACNumber = 0;
     public boolean isResultWin = false;
     public int resultDisplayTick = 0;
+    public String lastTelop = "";
+    public int telopTick = 0;
 
     public List<AnswererInformation> answerBox = new ArrayList<>();
     public String teamName = "";

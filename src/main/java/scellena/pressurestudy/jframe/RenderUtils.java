@@ -102,7 +102,19 @@ public class RenderUtils {
         renderText(g2d, info.getDescription(), x + 42, y, 16);
         renderText(g2d, info.getName(), x + 42, y + 17, 28);
         g2d.setColor(Color.BLACK);
-        renderTextMiddle(g2d, Integer.toString(number + 1), x + 20, y + 24, 40);
+        renderTextMiddleWidth(g2d, Integer.toString(number + 1), x + 20, y + 24, 40, 36);
+
+        //テロップも描画（仮）
+        if(MainSystem.gameData.telopTick > 0) {
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(x, y - 48, 320, 48);
+            g2d.setColor(Color.RED);
+            g2d.fillRect(x, y - 45, 320, 3);
+            g2d.setColor(Color.BLACK);
+            renderTextMiddleWidth(g2d, MainSystem.gameData.lastTelop, x + 160, y - 20, 320, 40);
+            g2d.setColor(new Color(128, 64, 0));
+            renderText(g2d, "ルール", x + 8, y - 48 - 8, 16);
+        }
     }
 
     /**
@@ -380,5 +392,10 @@ public class RenderUtils {
         for (int i = 0; i < 3; i++) {
             renderText(g2d, String.format("%3s", seconds).substring(i, i + 1), x + 20 + 20 * i, y + 4, 32);
         }
+    }
+
+    public static void showTelop(String telop){
+        MainSystem.gameData.telopTick = 200;
+        MainSystem.gameData.lastTelop = telop;
     }
 }

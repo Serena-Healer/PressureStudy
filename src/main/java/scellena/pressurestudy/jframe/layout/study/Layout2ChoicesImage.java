@@ -86,11 +86,14 @@ public class Layout2ChoicesImage extends LayoutBase {
             g.setColor(Color.BLACK);
             RenderUtils.renderTextMiddle(g, Utilities.getNumberString(n), 80 + 20, 80 + h / 2, 32);
 
-            RenderUtils.renderImageMiddle(g, q.getImagePath(), (int) (80 + w * 3), 80 + (h - 76) / 2, w * 3 - 64, h - 76);
-            RenderUtils.renderTextMiddleWidth(g, q.getHint(), (int) (100 + w * 3), 80 + h / 2 + 32, w * 5, 32);
+            RenderUtils.renderImageMiddle(g, q.getImagePath(), (int) (80 + w * 3), 80 + (h - 48) / 2, w * 6 - 64, h - 64 - 48);
+            RenderUtils.renderTextMiddleWidth(g, q.getTitle(), (int) (80 + w * 3), 80 + h - 48 - 24, w * 5, 32);
+            if(q.getHint() != null) {
+                RenderUtils.renderTextMiddleWidth(g, q.getHint(), (int) (80 + w * 3), 80 + 20, w * 5, 32);
+            }
 
-            RenderUtils.renderTextMiddleWidth(g, q.getChoice().get(0), (int) (80 + w * 1.5), 80 + h - 24, w * 3 - 24, 32);
-            RenderUtils.renderTextMiddleWidth(g, q.getChoice().get(1), (int) (80 + w * 4.5), 80 + h - 24, w * 3 - 24, 32);
+            RenderUtils.renderTextMiddleWidth(g, q.getChoice().get(0), (int) (80 + w * 1.5 + 8), 80 + h - 24, w * 3 - 24, 32);
+            RenderUtils.renderTextMiddleWidth(g, q.getChoice().get(1), (int) (80 + w * 4.5 + 8), 80 + h - 24, w * 3 - 24, 32);
 
             if(MainSystem.gameData.answered[n] || MainSystem.gameData.failed[n]){
                 g.setColor(new Color(0, 0, 0, 128));

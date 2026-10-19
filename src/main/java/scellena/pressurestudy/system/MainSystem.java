@@ -39,6 +39,7 @@ public class MainSystem {
             gameData.waDisplayTick--;
             gameData.resultDisplayTick--;
             gameData.finePlayDisplayTick--;
+            gameData.telopTick--;
 
             gameData.demoTick--;
             if(gameData.demoTick == 0){

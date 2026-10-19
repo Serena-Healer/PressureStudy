@@ -66,6 +66,14 @@ public class QuizInformationBase {
     }
 
     public int getWaCountAllowed() {
+        if(waCountAllowed == -1){
+            if(MainSystem.gameData.currentId == 9) return 1;
+            return 2;
+        }
+        return waCountAllowed;
+    }
+
+    public int getWaCountOption(){
         return waCountAllowed;
     }
 
@@ -111,6 +119,7 @@ public class QuizInformationBase {
             }else if(str.startsWith("category=")){
                 category = str.substring(9);
             }else if(str.startsWith("wa=")){
+                //誤答数（-1の場合、リーダー以外2×リーダー1×）
                 waCountAllowed = Integer.parseInt(str.substring(3));
             }else if(str.startsWith("ac=")){
                 acCountRequired = Integer.parseInt(str.substring(3));
@@ -186,14 +195,13 @@ public class QuizInformationBase {
         MainSystem.gameData.currentId = startId;
     }
 
-
     public static class SingleQuizInformation{
         QuizInformationBase parent;
         String title;
         String imagePath;
         String musicPath;
         String hint;
-        String answer;
+        String answer = "";
         List<String> choice = new ArrayList<>();
 
         public String getTitle() {
