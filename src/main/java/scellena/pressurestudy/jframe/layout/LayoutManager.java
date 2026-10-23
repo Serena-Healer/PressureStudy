@@ -1,7 +1,8 @@
 package scellena.pressurestudy.jframe.layout;
 
-import scellena.pressurestudy.jframe.layout.round_two.*;
+import scellena.pressurestudy.jframe.layout.special.*;
 import scellena.pressurestudy.jframe.layout.study.*;
+import scellena.pressurestudy.jframe.layout.thumbnail.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class LayoutManager {
     public static void init(){
         register("title", LayoutTitle.class);
         register("japanese_thumbnail", LayoutJapaneseThumbnail.class);
-        register("japanese_thumbnail2", LayoutJapaneseThumbnail2.class);
+        register("japanese_thumbnail2", LayoutJapaneseThumbnailLong.class);
         register("hidden_thumbnail", LayoutHiddenThumbnail.class);
         register("image_thumbnail", LayoutImageThumbnail.class);
         register("truefalse", LayoutTrueFalse.class);

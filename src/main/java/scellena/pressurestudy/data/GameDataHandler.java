@@ -34,6 +34,7 @@ public class GameDataHandler {
     public int resultDisplayTick = 0;
     public String lastTelop = "";
     public int telopTick = 0;
+    public String programTelop = "";
 
     public List<AnswererInformation> answerBox = new ArrayList<>();
     public String teamName = "";

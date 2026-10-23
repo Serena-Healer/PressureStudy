@@ -15,6 +15,7 @@ import scellena.pressurestudy.jframe.clips.ClipPlayerHandler;
 import scellena.pressurestudy.jframe.layout.LayoutManager;
 import scellena.pressurestudy.jframe.layout.LayoutPlayers;
 import scellena.pressurestudy.jframe.layout.study.LayoutTitle;
+import scellena.pressurestudy.jframe.layout.thumbnail.LayoutList;
 import scellena.pressurestudy.system.*;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ import static scellena.pressurestudy.system.MainSystem.gameData;
 public final class Main extends JavaPlugin {
 
     public static Plugin plugin;
-    public static String version = "1.2.1";
+    public static String version = "1.3.1";
 
     @Override
     public void onEnable() {
@@ -200,7 +201,7 @@ public final class Main extends JavaPlugin {
         if(command.getName().equals("demo")){
             if(MainSystem.gameData.quiz.getLayout() != null){
                 try {
-                    MainSystem.gameData.currentLayout = LayoutManager.layouts.get(MainSystem.gameData.quiz.getLayout()).newInstance();
+                    MainSystem.gameData.currentLayout = new LayoutList();
                 }catch(Exception e){
                 }
             }
@@ -249,6 +250,24 @@ public final class Main extends JavaPlugin {
         }
         if(command.getName().equals("export")){
             MainSystem.exportStats();
+            return true;
+        }
+        if(command.getName().equals("telop")){
+            StringBuilder builder = new StringBuilder();
+            for(String str : args){
+                if(builder.length() > 0) builder.append(" ");
+                builder.append(str);
+            }
+            RenderUtils.showTelop(builder.toString());
+            return true;
+        }
+        if(command.getName().equals("telop_list")){
+            StringBuilder builder = new StringBuilder();
+            for(String str : args){
+                if(builder.length() > 0) builder.append(" ");
+                builder.append(str);
+            }
+            gameData.programTelop = builder.toString();
             return true;
         }
         return super.onCommand(sender, command, label, args);

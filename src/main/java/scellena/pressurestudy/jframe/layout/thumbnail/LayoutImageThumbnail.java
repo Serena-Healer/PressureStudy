@@ -1,4 +1,4 @@
-package scellena.pressurestudy.jframe.layout.study;
+package scellena.pressurestudy.jframe.layout.thumbnail;
 
 import scellena.pressurestudy.data.QuizInformationBase;
 import scellena.pressurestudy.jframe.RenderUtils;

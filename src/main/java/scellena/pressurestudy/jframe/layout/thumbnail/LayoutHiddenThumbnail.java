@@ -1,12 +1,10 @@
-package scellena.pressurestudy.jframe.layout.study;
+package scellena.pressurestudy.jframe.layout.thumbnail;
 
-import scellena.pressurestudy.data.QuizInformationBase;
 import scellena.pressurestudy.jframe.RenderUtils;
 import scellena.pressurestudy.jframe.layout.LayoutBase;
 import scellena.pressurestudy.system.MainSystem;
 
 import java.awt.*;
-import java.util.List;
 
 public class LayoutHiddenThumbnail extends LayoutBase {
     @Override

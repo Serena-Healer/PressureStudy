@@ -13,12 +13,12 @@ public class TimerHelper {
                 gameData.timeLeft += (gameData.timeMax / 200);
                 if (gameData.timeMax <= gameData.timeLeft) {
                     ClipPlayerHandler.stopBGM();
+                    MainSystem.reset();
                     if(gameData.bgmId == 1){
                         ClipPlayerHandler.playBGM(MainSystem.gameData.quiz.getBgmAlternateName());
                     }else{
                         ClipPlayerHandler.playBGM(MainSystem.gameData.quiz.getBgmNormalName());
                     }
-                    MainSystem.reset();
                     gameData.charge = false;
                     gameData.timeLeft = gameData.timeMax + 60;
                 }

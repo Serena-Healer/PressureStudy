@@ -1,7 +1,6 @@
-package scellena.pressurestudy.jframe.layout.round_two;
+package scellena.pressurestudy.jframe.layout.special;
 
 import scellena.pressurestudy.data.QuizInformationBase;
-import scellena.pressurestudy.jframe.MovieUtils;
 import scellena.pressurestudy.jframe.RenderUtils;
 import scellena.pressurestudy.jframe.layout.LayoutBase;
 import scellena.pressurestudy.system.MainSystem;

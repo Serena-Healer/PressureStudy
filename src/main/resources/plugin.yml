@@ -62,3 +62,9 @@ commands:
     description: プレッシャーサイズ動画一時停止/再開
   export:
     description: 統計データ標準出力
+  telop:
+    description: 出題中テロップ表示
+    usage: /telop S
+  telop_list:
+    description: 問題一覧テロップ表示
+    usgae: /telop_list S

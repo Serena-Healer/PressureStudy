@@ -14,7 +14,68 @@ public class RenderUtils {
     public static void renderText(Graphics2D g, String text, int x, int y, int size){
         g.setFont(new Font("UD デジタル 教科書体 NP", Font.PLAIN, size));
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-        g.drawString(text, x, y + size);
+        renderFormattedText(g, text, x, y + size, size);
+    }
+
+    public static void renderTextTimerFont(Graphics2D g, String text, int x, int y, int size){
+        g.setFont(new Font("Helvetica", Font.PLAIN, size));
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+        renderFormattedText(g, text, x, y + size, size);
+    }
+
+    public static void renderFormattedText(Graphics2D g, String text, int x, int y, int size){
+        int h = 0;
+        for(int i=0; i<text.length(); i++){
+            if(text.substring(i).startsWith("\\n")){
+                i++;
+                h++;
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        Color defaultColor = g.getColor();
+        int currentXPos = 0;
+        int spacing = g.getFontMetrics().stringWidth("ii") - g.getFontMetrics().stringWidth("i") * 2;
+        boolean underlined = false;
+        boolean isFirstCharToRenderUnderlined = false;
+        for(int i=0; i<text.length(); i++){
+            if(text.substring(i).startsWith("\\")) {
+                char function = text.charAt(i + 1);
+                switch (function) {
+                    case '\\':
+                        builder.append("\\");
+                        i++;
+                        break;
+                    case 'c':
+                        g.setColor(new Color(Integer.parseInt(text.substring(i + 2, i + 8), 16)));
+                        i += 7;
+                        break;
+                    case 's':
+                        underlined = true;
+                        isFirstCharToRenderUnderlined = true;
+                        g.setColor(Color.RED);
+                        i++;
+                        break;
+                    case 'u':
+                        underlined = true;
+                        isFirstCharToRenderUnderlined = true;
+                        i++;
+                        break;
+                    case 'r':
+                        underlined = false;
+                        g.setColor(defaultColor);
+                        i++;
+                        break;
+                }
+            }else{
+                g.drawString(String.valueOf(text.charAt(i)), x + currentXPos, y);
+                if(underlined){
+                    g.fillRect(x + currentXPos - (isFirstCharToRenderUnderlined ? 0 : spacing), y, g.getFontMetrics().charWidth(text.charAt(i)) + (isFirstCharToRenderUnderlined ? 0 : spacing), 1);
+                    isFirstCharToRenderUnderlined = false;
+                }
+                currentXPos += g.getFontMetrics().charWidth(text.charAt(i)) + spacing;
+            }
+        }
     }
 
     public static void renderTextMiddleWidth(Graphics2D g, String text, int x, int y, int width, int maximum) {
@@ -40,7 +101,7 @@ public class RenderUtils {
             if(i == text.length() || text.substring(i).startsWith("\\n")){
                 i++;
                 String str = builder.toString();
-                g.drawString(str, x - g.getFontMetrics().stringWidth(str) / 2, y + g.getFontMetrics().getHeight() / 3 + (g.getFontMetrics().getHeight() * (hm * 2 - h) / 2));
+                renderFormattedText(g, str, x - g.getFontMetrics().stringWidth(getUnformattedText(str)) / 2, y + g.getFontMetrics().getHeight() / 3 + (g.getFontMetrics().getHeight() * (hm * 2 - h) / 2), size);
                 hm++;
                 builder = new StringBuilder();
             }else{
@@ -61,7 +122,7 @@ public class RenderUtils {
             if(i == text.length() || text.substring(i).startsWith("\\n")){
                 i++;
                 String str = builder.toString();
-                ans = (int)Math.max(ans, g.getFontMetrics().stringWidth(str));
+                ans = (int)Math.max(ans, g.getFontMetrics().stringWidth(getUnformattedText(str)));
                 builder = new StringBuilder();
             }else{
                 builder.append(text.charAt(i));
@@ -70,6 +131,35 @@ public class RenderUtils {
 
         if(ans == 0)return minimum;
         return (int)Math.min(width * 64 / ans, minimum);
+    }
+
+    public static String getUnformattedText(String text){
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i<text.length(); i++){
+            if(text.substring(i).startsWith("\\")) {
+                char function = text.charAt(i + 1);
+                switch (function) {
+                    case '\\':
+                        i++;
+                        break;
+                    case 'c':
+                        i += 7;
+                        break;
+                    case 's':
+                        i++;
+                        break;
+                    case 'u':
+                        i++;
+                        break;
+                    case 'r':
+                        i++;
+                        break;
+                }
+            }else{
+                builder.append(text.charAt(i));
+            }
+        }
+        return builder.toString();
     }
 
     public static int getEffectiveLength(String text){
@@ -237,12 +327,12 @@ public class RenderUtils {
             g2d.setColor(new Color(224, yellow, white));
             if(seconds > 900){
                 for (int i = 0; i < 3; i++) {
-                    renderText(g2d, String.format("%3s", (seconds / 60)).substring(i, i + 1), x + 144 + 18 * i, y + 4, 32);
+                    renderTextTimerFont(g2d, String.format("%3s", (seconds / 60)).substring(i, i + 1), x + 144 + 18 * i, y + 4, 32);
                 }
                 renderText(g2d, "分", x + 200, y + 20, 16);
             }else {
                 for (int i = 0; i < 3; i++) {
-                    renderText(g2d, String.format("%3s", seconds).substring(i, i + 1), x + 144 + 18 * i, y + 4, 32);
+                    renderTextTimerFont(g2d, String.format("%3s", seconds).substring(i, i + 1), x + 144 + 18 * i, y + 4, 32);
                 }
                 renderText(g2d, "秒", x + 200, y + 20, 16);
             }
